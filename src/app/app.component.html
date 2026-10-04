@@ -1,0 +1,13 @@
+<RadSideDrawer>
+  <StackLayout tkDrawerContent class="contenido">
+    <Label text="tareaModulo4"></Label>
+    <Button text="Estudiantes" (tap)="abrir()"></Button>
+  </StackLayout>
+  <GridLayout tkMainContent>
+    <page-router-outlet></page-router-outlet>
+    <Label *ngIf="notifications.toast$ | async as toast" [text]="toast" textWrap="true"
+      verticalAlignment="bottom" horizontalAlignment="center" margin="24" padding="16"
+      backgroundColor="#323232" color="white" borderRadius="8" isUserInteractionEnabled="false"
+      accessibilityLiveRegion="polite"></Label>
+  </GridLayout>
+</RadSideDrawer>

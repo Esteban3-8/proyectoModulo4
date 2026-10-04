@@ -1,0 +1,22 @@
+<ActionBar title="Dirección"></ActionBar>
+<GridLayout rows="auto, *">
+  <StackLayout row="0" class="contenido">
+    
+    <Label [text]="alumno ? alumno.nombre : 'Alumno no encontrado'" class="titulo"></Label>
+    <GridLayout columns="*, *" *ngIf="alumno">
+      <TextField col="0" hint="Latitud" [(ngModel)]="lat"></TextField>
+      <TextField col="1" hint="Longitud" [(ngModel)]="lng"></TextField>
+    </GridLayout>
+    <Button *ngIf="alumno" text="Aplicar coordenadas" (tap)="guardar()"></Button>
+    <Label [text]="mensaje" textWrap="true"></Label>
+    <Button text="Volver" (tap)="volver()"></Button>
+
+  </StackLayout>
+
+  <MapView row="1" *ngIf="mapaHabilitado && alumno"
+    [lat]="alumno.direccion.lat" [lng]="alumno.direccion.lng" [zoom]="15"
+    (ready)="listo($any($event))" (mapTap)="seleccionar($any($event))"></MapView>
+
+  <Label row="1" *ngIf="!mapaHabilitado" class="contenido" verticalAlignment="top"
+    text="El mapa requiere una clave de Google Maps. Puedes editar las coordenadas manualmente." textWrap="true"></Label>
+</GridLayout>

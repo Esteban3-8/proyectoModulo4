@@ -1,0 +1,39 @@
+<ActionBar title="Estudiantes">
+  <NavigationButton text="Menú" android.systemIcon="ic_menu_more" (tap)="menu()"></NavigationButton>
+  <ActionItem text="Menú" ios.position="left" (tap)="menu()"></ActionItem>
+</ActionBar>
+<GridLayout rows="auto, *" (loaded)="actualizar()">
+  <StackLayout row="0" class="contenido">
+    <Label [text]="mensaje" textWrap="true"></Label>
+  </StackLayout>
+  <ScrollView row="1">
+    <StackLayout>
+
+      <StackLayout *ngFor="let alumno of datos.alumnos" class="fila">
+        <Label [text]="alumno.nombre" class="titulo"></Label>
+        <TextField #nombre [text]="alumno.nombre" hint="Nombre del alumno"></TextField>
+        <Button text="Guardar nombre" (tap)="guardarNombre(alumno.id, $any(nombre).text)"></Button>
+        <Image [src]="alumno.foto" 
+               width="80" 
+               height="80" 
+               stretch="aspectFit" 
+               horizontalAlignment="left">
+        </Image>
+        <StackLayout *ngFor="let materia of alumno.materias">
+          <Label [text]="materia.nombre + ': ' + materia.calificacion"></Label>
+          <TextField #nota [text]="'' + materia.calificacion" keyboardType="number" hint="Calificación de 0 a 100"></TextField>
+          <Button text="Guardar calificación" (tap)="guardarCalificacion(alumno.id, materia.nombre, $any(nota).text)"></Button>
+        </StackLayout>
+        <Label [text]="'Promedio: ' + promedio(alumno)"></Label>
+
+        <Label [text]="'Direccion: ' + alumno.direccion.lat + ', ' + alumno.direccion.lng" textWrap="true"></Label>
+        
+        <Button text="Compartir promedio" (tap)="compartirPromedio(alumno)"></Button>
+        <Button text="Compartir foto" (tap)="compartirFoto(alumno)"></Button>
+        <Button text="Tomar foto" [isEnabled]="!ocupada" (tap)="tomarFoto(alumno)"></Button>
+        <Button text="Editar direccion" (tap)="verDireccion(alumno)"></Button>
+      </StackLayout>
+
+    </StackLayout>
+  </ScrollView>
+</GridLayout>
